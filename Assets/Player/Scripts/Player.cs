@@ -1,11 +1,16 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 namespace PlayerSpace
+
 {
 
     public class Player : MonoBehaviour
     {
-        [SerializeField] private int _lives;
+        [SerializeField] internal int _lives;
+        [SerializeField] private TMP_Text _text;
         
         [Header("Movement")] 
         [SerializeField] private float _speed;
@@ -31,6 +36,7 @@ namespace PlayerSpace
         {
             _movementController = GetComponent<MovementController>();
             _rb = GetComponent<Rigidbody2D>();
+            _text.gameObject.SetActive(false); // текст о смерти невидимый на старте
 
         }
 
@@ -88,6 +94,30 @@ namespace PlayerSpace
 
         }
 
+        internal void Damage()
+        {
+            if (!Dead())
+            {
+                _lives--;
+            }
+            else
+            {
+                ShowText();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            
+        }
+
+        internal bool Dead()
+        {
+            return _lives <= 0 ? true : false;
+        }
+        
+        private void ShowText()
+        {
+            _text.text = " Dead! "; // Устанавливаем текст сообщения
+            _text.gameObject.SetActive(true); // Делаем текст видимым
+        }
 
     }
 }

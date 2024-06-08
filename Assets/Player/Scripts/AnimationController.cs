@@ -21,4 +21,6 @@ public class AnimationController : MonoBehaviour
         _animator.SetBool("isGrounded", _player._isGrounded);
         _animator.SetFloat("velocityY",  _player._rb.velocity.y);
     }
+
+   
 }
