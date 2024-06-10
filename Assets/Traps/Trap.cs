@@ -16,8 +16,8 @@ namespace TrapSpace
         {
             if (collision.GetComponent<Player>() != null)
             {
-                OnHit.Invoke();
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                OnHit?.Invoke();
+                
             }
         }
     }

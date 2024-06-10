@@ -17,6 +17,7 @@ namespace PlayerSpace
         [SerializeField] private float _jumpForce;
         internal bool _isMove;
         internal bool _isFlip = true;
+        internal bool _isHit;
         private int _doubleJump = 2;
 
 
@@ -99,6 +100,8 @@ namespace PlayerSpace
             if (!Dead())
             {
                 _lives--;
+                Debug.Log(" lives " + _lives);
+                //_isHit = true;
             }
             else
             {

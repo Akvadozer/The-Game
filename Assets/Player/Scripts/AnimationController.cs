@@ -20,6 +20,7 @@ public class AnimationController : MonoBehaviour
         _animator.SetBool("isMove", _player._isMove);
         _animator.SetBool("isGrounded", _player._isGrounded);
         _animator.SetFloat("velocityY",  _player._rb.velocity.y);
+        _animator.SetBool("isHit", _player._isHit);
     }
 
    
