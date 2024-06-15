@@ -101,6 +101,7 @@ namespace PlayerSpace
             {
                 _lives--;
                 Debug.Log(" lives " + _lives);
+                // добавляем метод убавления сердечек на экране вместо текста с жизнями
                 //_isHit = true;
             }
             else

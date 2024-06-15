@@ -1,38 +1,58 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using PlayerSpace;
 
-namespace SlimeSpace
+namespace EnemySpace
 {
     public class Slime : MonoBehaviour
     {
-        [SerializeField] private float _speed;
-        [SerializeField] private float _distance;
-        private bool _moveLeft = true;
+        [SerializeField] protected float _speed;
+        [SerializeField] protected float _distance;
+        internal bool _moveLeft = true;
 
         
-        [SerializeField] private Transform _enemyTransform;
-        private Vector3 _startPosition;
-        private Player _player;
+        [SerializeField] protected Transform _enemyTransform;
+        protected Vector3 _startPosition;
+        protected Player _player;
+
+
+        public delegate void EnemyHit();
+
+        public static event EnemyHit OnEnemyHit ;
         
+        protected virtual void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.GetComponent<Player>() != null)
+            {
+                OnEnemyHit?.Invoke();
+            }
+        }
         
         
         void Start()
         {
             _startPosition = _enemyTransform.position; // стартовая позиция, обозначаем
+            
         }
 
 
-        void Update()
+        private void Update()
         {
             SlimeMovement();
         }
 
+        private void FixedUpdate()
+        {
+            
+        }
+
+
         private void SlimeMovement()
         {
-            // _enemy.transform.position = Vector3.MoveTowards(_enemyTransform.position, new Vector3( (float)-2.5 , (float)-3.5 , 0), _speed * Time.deltaTime);
+            
             if (_moveLeft)
             {
                 transform.Translate(Vector3.left * (_speed * Time.deltaTime));
@@ -52,13 +72,7 @@ namespace SlimeSpace
             }
         }
 
-       private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.GetComponent<Player>() != null)
-            {
-                _player.Damage();
-            }
-        }
+      
     }
 }
 

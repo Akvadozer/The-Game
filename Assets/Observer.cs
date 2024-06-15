@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using TrapSpace;
 using PlayerSpace;
-using SlimeSpace;
+using EnemySpace;
 using UnityEngine.SceneManagement;
 
 public class Observer : MonoBehaviour
@@ -14,9 +14,10 @@ public class Observer : MonoBehaviour
         _player = GetComponent<Player>();
     }
     
-    private void OnEnable()
+    private void OnEnable() //подписка на делегат
     {
         TrapSpace.Trap.OnHit += TrapCollision;
+        EnemySpace.Slime.OnEnemyHit += EnemyCollision;
     }
 
     private void TrapCollision()
@@ -26,10 +27,17 @@ public class Observer : MonoBehaviour
         //добавляем метод отнимания жизней из игрока и анимация
     }
 
-    private void OnDisable()
+    private void EnemyCollision()
+    {
+        _player.Damage();
+    }
+
+    private void OnDisable() //отписка
     {
         TrapSpace.Trap.OnHit -= TrapCollision;
+        EnemySpace.Slime.OnEnemyHit -= EnemyCollision;
     }
+    
 
     
 }
