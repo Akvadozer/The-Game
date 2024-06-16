@@ -4,20 +4,28 @@ using TrapSpace;
 using PlayerSpace;
 using EnemySpace;
 using UnityEngine.SceneManagement;
+using StrawSpace;
+using TMPro;
+using Unity.VisualScripting;
 
 public class Observer : MonoBehaviour
 {
     internal Player _player;
     
+    
     private void Start()
     {
         _player = GetComponent<Player>();
+        
     }
-    
+
+   
+
     private void OnEnable() //подписка на делегат
     {
         TrapSpace.Trap.OnHit += TrapCollision;
         EnemySpace.Slime.OnEnemyHit += EnemyCollision;
+        StrawSpace.Strawberry.OnStraw += Bonus;
     }
 
     private void TrapCollision()
@@ -36,8 +44,16 @@ public class Observer : MonoBehaviour
     {
         TrapSpace.Trap.OnHit -= TrapCollision;
         EnemySpace.Slime.OnEnemyHit -= EnemyCollision;
+        StrawSpace.Strawberry.OnStraw -= Bonus;
+    }
+
+    private void Bonus()
+    {
+        _player._lives++;
+        Debug.Log(" lives" + _player._lives);
     }
     
-
     
+     
 }
+    
